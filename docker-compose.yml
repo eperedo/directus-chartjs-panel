@@ -1,0 +1,19 @@
+version: "3"
+services:
+  directus:
+    image: directus/directus:9.22
+    ports:
+      - 8055:8055
+    volumes:
+      - ./database:/directus/database
+      - ./piechart-panel/dist:/directus/extensions/panels/piechart-panel
+    environment:
+      KEY: "955d861b-5ea1-5996-9aa3-922530ec40cf"
+      SECRET: "9916487b-cda1-52c2-b5b5-c8022c45e233"
+
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "123456"
+
+      DB_CLIENT: "sqlite3"
+      DB_FILENAME: "./database/data.db"
+      
