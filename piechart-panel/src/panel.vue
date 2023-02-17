@@ -1,7 +1,6 @@
 <template>
   <div class="text" :class="{ 'has-header': showHeader }">
-    <Pie v-if="showChart" :data="chartData" />
-    <p v-else="!showChart">Loading...</p>
+    <Pie :data="chartData" />
   </div>
 </template>
 
@@ -15,13 +14,12 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default defineComponent({
   data() {
     return {
-      showChart: false,
       chartData: {
-        labels: [],
+        labels: ["Perú", "Spain", "Rusia"],
         datasets: [
           {
-            backgroundColor: [],
-            data: [],
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+            data: [40, 20, 80],
           },
         ],
       },
@@ -31,15 +29,6 @@ export default defineComponent({
     Pie,
   },
   props: {
-    collectionName: {
-      type: String,
-    },
-    groupField: {
-      type: String,
-    },
-    colors: {
-      type: Array,
-    },
     showHeader: {
       type: Boolean,
       default: false,
@@ -48,20 +37,6 @@ export default defineComponent({
       type: String,
       default: "",
     },
-  },
-  inject: ["api"],
-  mounted() {
-    let url = `/items/${this.collectionName}?aggregate[count]=id&groupBy[]=${this.groupField}`;
-    this.api.get(url).then((res: any) => {
-      res.data.data.forEach((colObj: any) => {
-        this.chartData.labels.push(colObj[this.groupField]);
-        this.chartData.datasets[0].data.push(colObj.count.id);
-        this.chartData.datasets[0].backgroundColor = Array.isArray(this.colors)
-          ? this.colors
-          : [];
-      });
-      this.showChart = true;
-    });
   },
 });
 </script>

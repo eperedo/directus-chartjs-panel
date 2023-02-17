@@ -9,41 +9,6 @@ export default definePanel({
   component: PanelComponent,
   options: [
     {
-      field: "collectionName",
-      name: "Collection",
-      meta: {
-        interface: "system-collection",
-        width: "half",
-      },
-    },
-    {
-      field: "groupField",
-      name: "Field",
-      meta: {
-        interface: "system-field",
-        width: "half",
-        options: {
-          collectionField: "collectionName",
-        },
-      },
-    },
-    {
-      field: "colors",
-      name: "Select colors",
-      meta: {
-        width: "full",
-        interface: "select-multiple-dropdown",
-        options: {
-          choices: [
-            { text: "Red", value: "red" },
-            { text: "Blue", value: "blue" },
-            { text: "Green", value: "green" },
-          ],
-          allowOther: true,
-        },
-      },
-    },
-    {
       field: "text",
       name: "Text",
       type: "string",
