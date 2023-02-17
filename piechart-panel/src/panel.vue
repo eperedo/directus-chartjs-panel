@@ -20,7 +20,7 @@ export default defineComponent({
         labels: [],
         datasets: [
           {
-            backgroundColor: [],
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
             data: [],
           },
         ],
@@ -31,15 +31,6 @@ export default defineComponent({
     Pie,
   },
   props: {
-    collectionName: {
-      type: String,
-    },
-    groupField: {
-      type: String,
-    },
-    colors: {
-      type: Array,
-    },
     showHeader: {
       type: Boolean,
       default: false,
@@ -51,26 +42,21 @@ export default defineComponent({
   },
   inject: ["api"],
   mounted() {
-    let url = `/items/${this.collectionName}?aggregate[count]=id&groupBy[]=${this.groupField}`;
-    this.api.get(url).then((res: any) => {
-      res.data.data.forEach((colObj: any) => {
-        this.chartData.labels.push(colObj[this.groupField]);
-        this.chartData.datasets[0].data.push(colObj.count.id);
-        this.chartData.datasets[0].backgroundColor = Array.isArray(this.colors)
-          ? this.colors
-          : [];
+    this.api
+      .get("/items/user?aggregate[count]=id&groupBy[]=country")
+      .then((res: any) => {
+        res.data.data.forEach((user: any) => {
+          this.chartData.labels.push(user.country);
+          this.chartData.datasets[0].data.push(user.count.id);
+        });
+        this.showChart = true;
       });
-      this.showChart = true;
-    });
   },
 });
 </script>
 
 <style scoped>
 .text {
-  align-items: center;
-  display: flex;
-  justify-content: center;
   padding: 12px;
 }
 
